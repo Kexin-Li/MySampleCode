@@ -1,5 +1,5 @@
 # JDBCDemo
-本项目是一些JDBC操作的基础知识。
+本项目是关于 JDBC 的基础知识。
 
 # 环境
 - Eclipse
