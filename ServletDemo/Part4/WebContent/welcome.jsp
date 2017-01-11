@@ -7,6 +7,6 @@
 <title>Welcome</title>
 </head>
 <body>
-	welcome,${UserSession.username}!
+	welcome, ${UserSession.username}!
 </body>
 </html>
