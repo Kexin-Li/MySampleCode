@@ -7,6 +7,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 学习ResultSet结果集
+ * @author Kexin_Li
+ *
+ */
 public class TestResultSet {
 
 	public static void main(String[] args) {
@@ -18,6 +23,7 @@ public class TestResultSet {
 		String sql = "select id, name,email from CustomerTbl";
 		try {
 			Statement stmt = conn.createStatement();
+			// 查询结果是一个ResultSet
 			ResultSet rs = stmt.executeQuery(sql);
 			List<Customer> list = new ArrayList<>();
 			while (rs.next()) {

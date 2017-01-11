@@ -8,6 +8,11 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * CustomerDao µœ÷¿‡
+ * @author Kexin_Li
+ *
+ */
 public class CustomerDaoImpl implements CustomerDao{
 	
 	@Override

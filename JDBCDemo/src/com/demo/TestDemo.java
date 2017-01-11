@@ -5,13 +5,15 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-
-
+/**
+ * 第一个JDBC实例，配合DBUtil.java使用
+ * @author Kexin_Li
+ */
 public class TestDemo {
 
 	public static void main(String[] args) {
 		
-		// 通过数据库连接工具连接
+		// 通过数据库连接工具类连接
 		Connection conn = DBUtil.open();
 		
 		/**
@@ -46,6 +48,7 @@ public class TestDemo {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		} finally { 
+			// 关闭数据库
 			DBUtil.close(conn);
 		}
 	}

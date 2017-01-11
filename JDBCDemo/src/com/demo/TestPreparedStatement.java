@@ -5,6 +5,11 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * 学习PreparedStatement基本操作
+ * @author Kexin_Li
+ *
+ */
 public class TestPreparedStatement {
 
 	public static void main(String[] args) {
@@ -23,6 +28,11 @@ public class TestPreparedStatement {
 //		System.out.println(c1.getName());
 	}
 	
+	/**
+	 * 添加一个字段
+	 * @param name
+	 * @param email
+	 */
 	static void insert(String name, String email) {
 		String sql = "insert into CustomerTbl(name,email) values(?,?)";
 		Connection conn = DBUtil.open();
@@ -38,6 +48,10 @@ public class TestPreparedStatement {
 		}
 	}
 	
+	/**
+	 * 添加一个字段
+	 * @param c
+	 */
 	static void insert(Customer c) {
 		String sql = "insert into CustomerTbl(name,email) values(?,?)";
 		Connection conn = DBUtil.open();
@@ -53,6 +67,10 @@ public class TestPreparedStatement {
 		}
 	}
 	
+	/**
+	 * 更新一个字段
+	 * @param c
+	 */
 	static void update(Customer c) {
 		String sql = "update CustomerTbl set name = ? where id = ?";
 		Connection conn = DBUtil.open();
@@ -68,6 +86,10 @@ public class TestPreparedStatement {
 		}
 	}
 	
+	/**
+	 * 删除一个字段
+	 * @param id
+	 */
 	static void delete(int id) {
 		String sql = "delete from CustomerTbl where id = ? ";
 		Connection conn = DBUtil.open();
@@ -82,6 +104,11 @@ public class TestPreparedStatement {
 		}
 	}
 	
+	/**
+	 * 查询一个字段
+	 * @param id
+	 * @return
+	 */
 	static Customer query(int id) {
 		String sql = "select id,name,email from CustomerTbl where id = ?";
 		Connection conn = DBUtil.open();

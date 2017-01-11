@@ -5,12 +5,19 @@ import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 
+/**
+ * ѧϰCallableStatement
+ * @author Kexin_Li
+ */
 public class TestCallableStatement {
 
 	public static void main(String[] args) {
 		test1();
 	}
-	 
+	
+	/**
+	 * conn.prepareCall("{call all_customer()}");
+	 */
 	static void test0() {
 		Connection conn = DBUtil.open();
 		try {
@@ -29,6 +36,9 @@ public class TestCallableStatement {
 		}
 	}
 	
+	/**
+	 * conn.prepareCall("{call insert_customer(?,?)}");
+	 */
 	static void test1() {
 		Connection conn = DBUtil.open();
 		try {

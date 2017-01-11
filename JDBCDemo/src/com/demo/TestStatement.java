@@ -7,6 +7,10 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+/**
+ * 学习Statement基本操作
+ * @author Kexin_Li
+ */
 public class TestStatement {
 
 	public static void main(String[] args) {
@@ -17,6 +21,9 @@ public class TestStatement {
 		query();
 	}
 
+	/**
+	 * 创建表
+	 */
 	static void createTable() {
 		Connection conn = DBUtil.open();
 		String sql = "create table UserTbl(id int primary key auto_increment,name varchar(20))";
@@ -30,6 +37,9 @@ public class TestStatement {
 		}
 	}
 	
+	/**
+	 * 添加字段
+	 */
 	static void insert() {
 		Connection conn = DBUtil.open();
 		String sql = "insert into UserTbl (name) value('tom')";
@@ -43,6 +53,9 @@ public class TestStatement {
 		}
 	}
 	
+	/**
+	 * 更新表
+	 */
 	static void update() {
 		Connection conn = DBUtil.open();
 		String sql = "update UserTbl set name='big tom' where id = 3";
@@ -56,6 +69,9 @@ public class TestStatement {
 		}
 	}
 	
+	/**
+	 * 删除字段
+	 */
 	static void delete() {
 		Connection conn = DBUtil.open();
 		String sql = "delete from UserTbl where id = 1";
@@ -69,6 +85,9 @@ public class TestStatement {
 		}
 	}
 	
+	/**
+	 * 查询字段
+	 */
 	/*
 	static void query() {
 		Connection conn = DBUtil.open();
@@ -88,6 +107,10 @@ public class TestStatement {
 		}
 	} */
 	
+	/**
+	 * 查询字段并返回一个List
+	 * @return
+	 */
 	static List<User> query() {
 		Connection conn = DBUtil.open();
 		String sql = "select id,name from UserTbl";

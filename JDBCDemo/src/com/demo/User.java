@@ -1,5 +1,9 @@
 package com.demo;
 
+/**
+ * UserTbl表对应的User类
+ * @author Kexin_Li
+ */
 public class User {
 
 	private int id;

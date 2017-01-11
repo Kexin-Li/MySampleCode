@@ -1,5 +1,9 @@
 package com.demo;
 
+/**
+ * Dao模式测试类类
+ * @author Kexin_Li
+ */
 public class TestDao {
 
 	public static void main(String[] args) {

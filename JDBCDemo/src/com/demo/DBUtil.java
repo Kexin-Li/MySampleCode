@@ -1,6 +1,5 @@
 package com.demo;
 
-//import java.io.FileNotFoundException;
 import java.io.FileReader;
 //import java.io.IOException;
 import java.io.Reader;
@@ -10,7 +9,7 @@ import java.sql.SQLException;
 import java.util.Properties;
 
 /**
- * 数据库连接的工具类
+ * 数据库连接的工具类，配合config.properties使用
  * @author Kexin_Li
  */
 public class DBUtil {
@@ -20,6 +19,9 @@ public class DBUtil {
 	private static String username;
 	private static String password;
 	
+	/**
+	 * 静态块初始化driver等参数
+	 */
 	static {
 		Properties prop = new Properties();
 		Reader in;
@@ -36,6 +38,10 @@ public class DBUtil {
 		password = prop.getProperty("password");
 	}
 	
+	/**
+	 * 打开数据库连接
+	 * @return
+	 */
 	public static Connection open() {
 		try {
 			Class.forName(driver);
@@ -46,6 +52,10 @@ public class DBUtil {
 		return null;
 	}
 	
+	/**
+	 * 关闭数据库连接
+	 * @param conn
+	 */
 	public static void close(Connection conn) {
 		if (conn != null) {
 			try {

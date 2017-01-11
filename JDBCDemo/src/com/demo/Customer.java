@@ -1,5 +1,9 @@
 package com.demo;
 
+/**
+ * CustomerTbl表对应的Customer类
+ * @author Kexin_Li
+ */
 public class Customer {
 
 	private int id;

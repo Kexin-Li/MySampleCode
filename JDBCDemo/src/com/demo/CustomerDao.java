@@ -2,6 +2,10 @@ package com.demo;
 
 import java.util.List;
 
+/**
+ * 对Customer类相应操作的接口
+ * @author Kexin_Li
+ */
 public interface CustomerDao {
 	//CRUD 
 	public void add(Customer c);
