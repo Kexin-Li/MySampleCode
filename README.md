@@ -4,4 +4,4 @@
 #索引
 - Servlet 基础：[代码在这里](https://github.com/Kexin-Li/MySampleCode/tree/master/ServletDemo)、[相关博客](http://likexin.org/)
 - JDBC 基础：[代码在这里](https://github.com/Kexin-Li/MySampleCode/tree/master/JDBCDemo)
-- 一个简单的注册与登录 Java Web 小项目：[代码在这里](https://github.com/Kexin-Li/MySampleCode/tree/master/LoginProject)
+- 一个由 SSH 实现的用户管理系统。
