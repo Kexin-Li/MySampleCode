@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans
+	xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+	
+	<!-- 配置 SessionFactory -->
+	<bean id="sessionFactory" class="org.springframework.orm.hibernate3.LocalSessionFactoryBean">
+	
+		<property name="dataSource">
+			<ref local="dataSource" />
+		</property>
+		
+		<!-- 配置 Hibernate 的属性 -->
+		<property name="hibernateProperties">
+			<props>
+				<!-- 配置数据库方言 -->
+				<prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+				<!-- 输入运行时生成的 SQL 语句 -->
+				<prop key="hibernate.show_sql">true</prop>
+			</props>
+		</property>
+		
+		<!-- 指定 Hibernate 映射文件的路径 -->
+		<property name="mappingResources">
+			<list>
+				<value>com/entity/User.hbm.xml</value>
+			</list>
+		</property>
+	</bean>
+	
+	<!-- 配置 DataSource -->
+	<bean id="dataSource" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		
+		<!-- 配置数据库 JDBC 驱动 -->
+		<property name="driverClassName">
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		
+		<!-- 配置数据库连接 URL -->
+		<property name="url">
+			<value>jdbc:mysql://localhost:3306/mysqldb</value>
+		</property>
+		
+		<!-- 配置数据库用户名 -->
+		<property name="username">
+			<value>root</value>
+		</property>
+		
+		<!-- 配置数据库密码 -->
+		<property name="password">
+			<value>yjzsgNHZok147</value>
+		</property>	
+	</bean>
+	
+	<!-- 配置 UserDAO -->
+	<bean id="userDAO" class="com.dao.UserDAOImpl" abstract="false" lazy-init="default" autowire="default">
+	 	<property name="sessionFactory">
+	 		<ref bean="sessionFactory" />
+	 	</property>
+	 </bean>	 
+	
+	<!-- 配置 UserService -->
+	<bean id="userService" class="com.service.UserServiceImpl">
+		<!-- 注入 DAO 组件 -->
+		<property name="userDAO" ref="userDAO"></property>
+	</bean>
+	
+	<!-- 配置控制器 LoginAction -->
+	<bean id="loginAction" class="com.action.LoginAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	<!-- 配置 UserQueryAction -->
+	<bean id="userQueryAction" class="com.action.UserQueryAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	<!-- 配置 UserAction -->
+	<bean id="userAction" class="com.action.UserAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	<!-- 配置 UserDeleteAction -->
+	<bean id="userDeleteAction" class="com.action.UserDeleteAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+	
+	<!-- 配置 UserUpdateAction -->
+	<bean id="userUpdateAction" class="com.action.UserUpdateAction">
+		<property name="userService" ref="userService"></property>
+	</bean>
+</beans>
