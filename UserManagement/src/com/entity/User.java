@@ -1,7 +1,7 @@
 package com.entity;
 
 /**
- * ≥÷æ√ªØ¿‡
+ * Object/Relational Mapping Class
  * @author Kexin_Li
  */
 public class User {
@@ -23,7 +23,7 @@ public class User {
 		this.setUsertype(usertype);
 	}
 
-	// getter and setter
+	// Getter and Setter
 	public int getId() {
 		return id;
 	}

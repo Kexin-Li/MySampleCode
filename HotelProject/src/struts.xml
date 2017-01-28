@@ -1,0 +1,100 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE struts PUBLIC
+    "-//Apache Software Foundation//DTD Struts Configuration 2.0//EN"
+    "http://struts.apache.org/dtds/struts-2.0.dtd">
+
+<struts>
+	<package name="hotel" namespace="/" extends="struts-default">
+		<action name="userService" class="userAction">
+			
+		</action>
+	</package>
+	
+	<package name="authority" extends="struts-default">
+		<interceptors>
+			<interceptor name="authority" class="com.interceptor.AuthorityInterceptor" />
+			<interceptor-stack name="mydefault">
+				<interceptor-ref name="defaultstack" />
+				<interceptor-ref name="authority" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="mydefault"></default-interceptor-ref>
+		
+		<global-results><result name="login">/login.jsp</result></global-results>
+		
+		<!-- order -->
+		<action name="saveOrder" class="saveOrderAction">
+			<result name="success" type="dispatcher">/order/add.jsp</result>
+			<result name="addSuc" type="redirect">orderService</result>
+			<result name="addFail" type="dispatcher">/info/result.jsp</result>
+		</action>
+
+		<action name="orderService" class="orderServiceAction">
+			<result name="success" type="dispatcher">/info/orderInfo.jsp</result>
+			<result name="delSuc" type="dispatcher">/info/result.jsp</result>
+		</action>
+	</package>
+	
+	<package name="authorityAdmin" extends="struts-default">
+		<interceptors>
+			<interceptor name="authorityAdmin" class="com.integration.interceptor.AdminInterceptor" />
+			<interceptor-stack name="mydefaultAdmin">
+				<interceptor-ref name="defaultStack" />
+				<interceptor-ref name="authorityAdmin" />
+			</interceptor-stack>
+		</interceptors>
+		<default-interceptor-ref name="mydefaultAdmin"></default-interceptor-ref>
+
+		<global-results>
+			<result name="login">/adminLogin.jsp</result>
+		</global-results>
+
+		<!-- user -->
+		<action name="listUser" class="listUserAction">
+			<result name="success">/user/list.jsp</result>
+		</action>
+
+		<action name="deleteUser" class="removeUserAction">
+			<result name="success" type="redirect">listUser.action</result>
+		</action>
+
+		<action name="updatePUser" class="updatePUserAction">
+			<result name="success">/user/update.jsp</result>
+		</action>
+
+		<action name="updateUser" class="updateUserAction">
+			<result name="success" type="redirect">listUser.action</result>
+		</action>
+
+		<!-- admin -->
+		<action name="saveAdmin" class="saveAdminAction">
+			<result name="success" type="redirect">/index.jsp</result>
+		</action>
+
+		<!-- hotel -->
+		<action name="saveRoom" class="saveRoomAction">
+			<result name="success" type="redirect">listRoom.action</result>
+		</action>
+
+		<action name="listRoom" class="listRoomAction">
+			<result name="success">/room/list.jsp</result>
+		</action>
+
+		<action name="deleteRoom" class="removeRoomAction">
+			<result name="success" type="redirect">listRoom.action</result>
+		</action>
+
+		<action name="updatePRoom" class="updatePRoomAction">
+			<result name="success">/room/update.jsp</result>
+		</action>
+
+		<action name="updateRoom" class="updateRoomAction">
+			<result name="success" type="redirect">listRoom.action</result>
+		</action>
+
+		<!-- order -->
+		<action name="listOrder" class="listOrderAction">
+			<result name="success" type="dispatcher">/order/list.jsp</result>
+		</action>
+	</package>
+</struts>
