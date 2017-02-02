@@ -18,11 +18,6 @@
 - 数据库层：JDBC/MyBatis+MySQL
 
 ## 着手开发
-开发的步骤大致分为：
-- 回复内容列表：
-	- 控制层
-	- 数据库层
-
 ### 控制层
 ListServlet 的开发：
 - 在 web.xml 中注册 ListServlet。
