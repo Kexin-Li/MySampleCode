@@ -1,0 +1,29 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="Command">
+
+  <resultMap type="com.bean.Command" id="Command">
+    <id column="c_id" jdbcType="INTEGER" property="id"/>
+    <result column="name" jdbcType="VARCHAR" property="name"/>
+    <result column="description" jdbcType="VARCHAR" property="description"/>
+    <collection property="contentList" resultMap="CommandContent.Content"></collection>
+  </resultMap>
+  
+  <select id="queryCommandList" parameterType="com.bean.Command" resultMap="Command">
+  	<!-- 由于在加载列名时不会包含前缀(a,b) -->
+  	<!-- 防止两个id重复，需要给第一个id起个别名，同时在resultMap中也要修改id的column属性 -->
+  	select a.id c_id, a.name, a.description, b.id, b.content, b.command_id 
+  	from command a left join command_content b 
+  	on a.id=b.command_id
+  	<where>
+  		<if test="name != null and !&quot;&quot;.equals(name.trim()) ">and name = #{name}</if>
+  		<if test="description != null and !&quot;&quot;.equals(description.trim()) ">and description like '%' #{description} '%'</if>
+  	</where> 	
+ </select>
+  
+  
+</mapper>
