@@ -4,7 +4,7 @@
     PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
     "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="Message">
+<mapper namespace="com.dao.IMessage">
 
   <resultMap type="com.bean.Message" id="MessageResult">
     <id column="id" jdbcType="INTEGER" property="id"/>
@@ -13,23 +13,65 @@
     <result column="content" jdbcType="VARCHAR" property="content"/>
   </resultMap>
 
-  <!-- query -->
+  <!-- query 
   <select id="queryMessageList" parameterType="com.bean.Message" resultMap="MessageResult">
   	select id, command, description, content from message
-  	<where>
+  	<where>   -->
   		<!-- 双引号要转义一下，&&要转义或者替换为 and。 -->
-  		<!-- ? 要替换为 #{} 这个表达式 -->
+  		<!-- ? 要替换为 #{} 这个表达式 -->  
+  		<!-- 
   		<if test="command != null and !&quot;&quot;.equals(command.trim()) ">and command = #{command}</if>
   		<if test="description != null and !&quot;&quot;.equals(description.trim()) ">and description like '%' #{description} '%'</if>
   	</where>
+  </select>  -->
+ 
+  <!-- queryMessageList，带分页查询。 -->
+  <select id="queryMessageList" parameterType="java.util.Map" resultMap="MessageResult">
+  	select id, command, description, content from message
+  	<where>  		
+  		<if test="message.command != null and !&quot;&quot;.equals(message.command.trim()) ">
+  			and command = #{message.command}
+  		</if>
+  		<if test="message.description != null and !&quot;&quot;.equals(message.description.trim()) ">
+  			and description like '%' #{message.description} '%'
+  		</if>
+  	</where>
+  	order by id limit #{page.dbIndex},#{page.dbNumber}
+  </select>  
+  
+  <!-- count -->
+  <select id="count" parameterType="com.bean.Message" resultType="int">
+  	select count(*) from message
+  	<where>
+  		<if test="command != null and !&quot;&quot;.equals(command.trim()) ">
+  			and command = #{command}
+  		</if>
+  		<if test="description != null and !&quot;&quot;.equals(description.trim()) ">
+  			and description like '%' #{description} '%'
+  		</if>
+  	</where>
   </select>
+  
+  <!-- queryMessageListByPage，sql中不带分页查询，由拦截器实现分页 -->
+  <select id="queryMessageListByPage" parameterType="java.util.Map" resultMap="MessageResult">
+  	select id, command, description, content from message
+  	<where>  		
+  		<if test="message.command != null and !&quot;&quot;.equals(message.command.trim()) ">
+  			and command = #{message.command}
+  		</if>
+  		<if test="message.description != null and !&quot;&quot;.equals(message.description.trim()) ">
+  			and description like '%' #{message.description} '%'
+  		</if>
+  	</where>
+  	order by id 
+  </select>  
   
   <!-- delete -->
   <delete id="deleteOne" parameterType="int">
   	delete from message where id = #{_parameter}
   </delete>
   
-  <!-- 【不明白】foreach标签属性 -->
+  <!-- foreach标签属性 -->
   <delete id="deleteBatch" parameterType="java.util.List">
   	delete from message where id in(
   		<foreach collection="list" item="item" separator=",">

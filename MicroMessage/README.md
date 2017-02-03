@@ -441,6 +441,43 @@ resultMap：主表的namespace.(resultMap)id
 Syntax error on token "Invalid Regular Expression Options", no accurate corr
 ```
 
+## 接口式编程
+接口式编程的出街解决了 XML 文件中的两个问题：
+- 大大降低 namespace + 执行语句 id 的拼写错误风险。
+- 大大降低传入的参数和返回值类型不匹配的风险。
+
+1、在 dao 层创建和配置文件对应的接口文件。
+
+2、将语句的 id 作为方法名，传入对应的参数。
+
+3、在执行 sql 语句时：
+- 首先使用 sqlSession.getMapper(IMessage.calss) 实例化接口。
+- 接着调用接口方法执行 SQL 语句。
+
+### 【未完成】接口式编程的原理
+运用到了代理模式。
+
+## 分页实现
+### 简单分页
+1、将跟分页有关的参数封装到 Page 类中。
+
+2、简单实现的本质为在 xml 中将 sql 语句改为带有分页查询的 sql 语句(即 limit ...)，所以主要是在 xml 中配置 sql 语句，同时 limit 后面跟的参数(dbIndex, dbNumber)需要在 dao 层(不确定是不是这里)去拿到，所以还有相应的改变。
+
+3、在 jsp 中用 js 方法展示分页。
+
+### 拦截器实现分页
+拦截器实现分页的本质在于不在 xml 上下功夫，而是创建一个 Interceptor 类，在列表查询功能之前将原始的 sql 语句换成带有分页查询的 sql 语句。
+
+1、在创建好了 Interceptor 类之后要在 Configuration.xml 中注册。
+
+2、接着在 Interceptor 类中首先判断拦截的对象(plugin 方法)。
+
+3、然后在 intercept 方法中过滤拦截对象后(正则表达式，看是否匹配 xml 中的 id)。
+
+4、接着将原始 sql 语句掉包成带有分页查询的 sql 语句。
+
+5、最后交回主权。(invocation.proceed())
+
 ## 待完成
 - 修改页面和功能
 - 表头排序

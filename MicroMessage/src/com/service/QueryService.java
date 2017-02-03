@@ -1,6 +1,8 @@
 package com.service;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 import java.util.Random;
 
 import com.bean.Command;
@@ -8,6 +10,7 @@ import com.bean.CommandContent;
 import com.bean.Message;
 import com.dao.CommandDao;
 import com.dao.MessageDao;
+import com.entity.Page;
 import com.util.Iconst;
 
 /**
@@ -18,14 +21,25 @@ import com.util.Iconst;
 public class QueryService {
 
 	/**
-	 * 查询操作
+	 * 查询操作，带分页功能。
 	 * @param command
 	 * @param description
 	 * @return
 	 */
-	public List<Message> queryMessageList(String command, String description) {
+	public List<Message> queryMessageList(String command, String description, Page page) {
 		MessageDao messageDao = new MessageDao();
-		return messageDao.queryMessageList(command, description);
+		Message message = new Message();
+		message.setCommand(command);
+		message.setDescription(description);
+		// 根据条件查询条数
+		int totalNumber = messageDao.count(message);
+		// 组织分页查询参数
+		page.setTotalNumber(totalNumber);
+		Map<String, Object> parameter = new HashMap<>();
+		parameter.put("message", message);
+		parameter.put("page", page);
+		// 分页查询并返回结果
+		return messageDao.queryMessageList(parameter);
 	}
 	
 	/**
@@ -58,6 +72,26 @@ public class QueryService {
 			return contentList.get(new Random().nextInt(contentList.size())).getContent();
 		}
 		return Iconst.NO_MATCHING_CONTENT;
+	}
+	
+	/**
+	 * 根据查询条件分页查询消息列表，通过拦截器实现。
+	 * @param command
+	 * @param description
+	 * @param page
+	 * @return
+	 */
+	public List<Message> queryMessageListByPage(String command, String description, Page page) {
+		Map<String, Object> parameter = new HashMap<>();
+		// 组织消息对象
+		Message message = new Message();
+		message.setCommand(command);
+		message.setDescription(description);
+		parameter.put("message", message);
+		parameter.put("page", page);
+		MessageDao messageDao = new MessageDao();
+		// 分页查询并返回结果
+		return messageDao.queryMessageListByPage(parameter);
 	}
 	
 	/**

@@ -15,6 +15,11 @@
     <typeAlias alias="UserAlias" type="org.apache.ibatis.submitted.complex_property.User"/>
   </typeAliases> -->
 
+<!-- 配置拦截器 -->
+ <plugins>
+ 	<plugin interceptor="com.interceptor.PageInterceptor" />
+ </plugins>
+
   <environments default="development">
     <environment id="development">
       <transactionManager type="JDBC">
