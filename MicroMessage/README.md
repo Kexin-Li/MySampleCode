@@ -481,3 +481,4 @@ Syntax error on token "Invalid Regular Expression Options", no accurate corr
 ## 待完成
 - 修改页面和功能
 - 表头排序
+- 批量增删
