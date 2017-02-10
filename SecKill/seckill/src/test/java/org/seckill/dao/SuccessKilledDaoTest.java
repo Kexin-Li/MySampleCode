@@ -8,18 +8,16 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 
 import javax.annotation.Resource;
 
-import static org.junit.Assert.*;
-
 /**
  * SeckillKilledDao 方法的测试类
  * Created by Kexin_Li on 2017/2/9.
  */
 @RunWith(SpringJUnit4ClassRunner.class)
 @ContextConfiguration({"classpath:spring/spring-dao.xml"})
-public class SuccessKilleDaoTest {
+public class SuccessKilledDaoTest {
 
     @Resource
-    private SuccessKilleDao successKilleDao;
+    private SuccessKilledDao successKilledDao;
 
     @Test
     // 这里执行一次后会输出 insertCount=1,执行第二次就会输出 insertCount=0.这样是没有重复插入的表现.
@@ -28,7 +26,7 @@ public class SuccessKilleDaoTest {
     public void insertSuccessKilled() throws Exception {
         long id = 1001L;
         long phone = 13011112222L;
-        int insertCount = successKilleDao.insertSuccessKilled(id, phone);
+        int insertCount = successKilledDao.insertSuccessKilled(id, phone);
         System.out.println("insertCount= " + insertCount);
     }
 
@@ -36,7 +34,7 @@ public class SuccessKilleDaoTest {
     public void queryByIdWithSeckill() throws Exception {
         long id = 1001L;
         long phone = 13011112222L;
-        SuccessKilled successKilled = successKilleDao.queryByIdWithSeckill(id, phone);
+        SuccessKilled successKilled = successKilledDao.queryByIdWithSeckill(id, phone);
         System.out.println(successKilled);
         System.out.println(successKilled.getSeckill());
     }

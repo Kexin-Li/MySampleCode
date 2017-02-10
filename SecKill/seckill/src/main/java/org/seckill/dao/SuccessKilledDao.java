@@ -7,7 +7,7 @@ import org.seckill.entity.SuccessKilled;
  * SuccessKilled 实体类的 DAO 接口
  * Created by Kexin_Li on 2017/2/9.
  */
-public interface SuccessKilleDao {
+public interface SuccessKilledDao {
 
     /**
      * 插入购买明细，可过滤重复秒杀。

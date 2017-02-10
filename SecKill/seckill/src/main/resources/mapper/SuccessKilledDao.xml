@@ -2,7 +2,7 @@
         PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 
-<mapper namespace="org.seckill.dao.SuccessKilleDao">
+<mapper namespace="org.seckill.dao.SuccessKilledDao">
     
     <insert id="insertSuccessKilled">
         <!-- 在这里为了避免因主键冲突而产生的报错,而加上了 ignore 关键字. 这样返回值就是 0 而不会插入成功 -->
