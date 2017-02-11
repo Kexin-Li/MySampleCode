@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+        http://www.springframework.org/schema/beans/spring-beans.xsd
+        http://www.springframework.org/schema/mvc
+        http://www.springframework.org/schema/mvc/spring-mvc.xsd
+        http://www.springframework.org/schema/context
+        http://www.springframework.org/schema/context/spring-context.xsd">
+
+    <!-- 配置 SpringMVC -->
+
+    <!-- 1:开启 SpringMVC 注解模式 -->
+    <!-- 这是一个简化配置,有下面三个作用:
+         1):自动注册 DefaultAnnotationHandlerMapping,也就是映射 URL 时采用注解的方式.
+         2):自动注册 AnnotationMethodHandlerAdapter,这个是基于注解的方法适配器.
+         3):默认提供一系列功能:
+                1):数据绑定
+                2):数字和日期的 Format,比如使用 @NumberFormat, @DateFormat 注解
+                3):xml 和 json 默认读写支持 -->
+    <mvc:annotation-driven />
+
+    <!-- 2:静态资源配置 -->
+    <!-- 这个配置主要是配合在 web.xml 中使用 servlet-mapping 配置时的映射路径是 "/",因为在 Spring3.0 之前是不允许这么写的.
+         这个配置有两个作用:
+            1):加入对静态资源的处理:js,image
+            2):允许使用"/"做整体映射-->
+    <mvc:default-servlet-handler/>
+
+    <!-- 3:配置 JSP 显示 ViewResolver -->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <property name="viewClass" value="org.springframework.web.servlet.view.JstlView"/>
+        <property name="prefix" value="/WEB-INF/jsp/"/>
+        <property name="suffix" value=".jsp"/>
+    </bean>
+
+    <!-- 4:扫描 web 相关的bean -->
+    <context:component-scan base-package="org.seckill.web"/>
+
+</beans>
