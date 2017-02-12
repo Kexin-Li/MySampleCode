@@ -5,6 +5,7 @@ import org.seckill.entity.Seckill;
 
 import java.util.Date;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Seckill 实体类的 DAO 接口
@@ -31,14 +32,20 @@ public interface SeckillDao {
 
     /**
      * 根据偏移量查询秒杀商品列表
+     *
+     * 由于 Java 没有保存形参的记录,所以 queryAll(int offset, int limit) 在运行时将被解析为 query(arg0, arg1).
+     * 解决的办法是在参数前面加上 Param 的注解.
      * @param offset
      * @param limit
      * @return
      */
     List<Seckill> queryAll(@Param("offset") int offset, @Param("limit") int limit);
 //      List<Seckill> queryAll(int offset, int limit);
-    /*
-    * 由于 Java 没有保存形参的记录,所以 queryAll(int offset, int limit) 在运行时将被解析为 query(arg0, arg1).
-    * 解决的办法是在参数前面加上 Param 的注解.
-    */
+
+    /**
+     * 使用存储过程执行秒杀
+     * @param paramMap
+     */
+    void killByProcedure(Map<String, Object> paramMap);
+
 }

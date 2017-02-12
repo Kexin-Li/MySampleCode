@@ -54,4 +54,13 @@ public interface SeckillService {
     SeckillExecution executeSeckill(long seckillId, long userPhone, String md5)
             throws SeckillException, RepeatKillException, SeckillCloseException;
 
+    /**
+     * 使用存储过程执行秒杀操作,这里就不要抛出的异常了.因为我们之前使用异常是想知道是什么样的错误,现在只有获得存储过程的 r_result 值就可以知道.
+     * @param seckillId
+     * @param userPhone
+     * @param md5
+     * @return
+     */
+    SeckillExecution executeSeckillProcedure(long seckillId, long userPhone, String md5);
+
 }

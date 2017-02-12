@@ -48,6 +48,7 @@ CREATE TABLE success_killed(
 )ENGINE=InnoDB DEFAULT CHARSET=utf8 COMMENT='秒杀成功明细表';
 
 -- 更新所有商品的秒杀时间
-UPDATE seckill SET start_time = '2017-02-10 00:00:00', end_time = '2017-02-12 00:00:00' WHERE seckill_id=1001;
+UPDATE seckill SET start_time = '2017-02-10 00:00:00', end_time = '2017-02-22 00:00:00' WHERE number=100;
+UPDATE seckill SET number = 100 WHERE end_time = '2017-02-22 00:00:00';
 
 -- SHOW CREATE TABLE seckill\G;#显示表的创建信息

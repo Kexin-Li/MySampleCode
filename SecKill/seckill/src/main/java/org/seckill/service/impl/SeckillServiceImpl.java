@@ -1,5 +1,6 @@
 package org.seckill.service.impl;
 
+import org.apache.commons.collections.MapUtils;
 import org.seckill.dao.SeckillDao;
 import org.seckill.dao.SuccessKilledDao;
 import org.seckill.dto.Exposer;
@@ -18,9 +19,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.DigestUtils;
 
-import java.util.Date;
-import java.util.Dictionary;
-import java.util.List;
+import java.util.*;
 
 /**
  * SeckillService 的实现类
@@ -63,6 +62,18 @@ public class SeckillServiceImpl implements SeckillService{
     }
 
     public Exposer exportSeckillUrl(long seckillId) {
+        // 【优化点】:缓存优化
+
+        /**
+         * 常用的优化,这样如果放在业务逻辑里是很大的负担.所以我们把它搬到了 DAO 层.
+         * get from cache
+         * if null
+         *  get db
+         * else
+         *  put cache
+         * other logic
+         */
+
         Seckill seckill = seckillDao.queryById(seckillId);
         // 如果 seckill 对象为空,返回的 Exposer 对象的标志位为 false.
         if (seckill == null) {
@@ -112,21 +123,21 @@ public class SeckillServiceImpl implements SeckillService{
         }
         // 执行秒杀逻辑:减库存 + 记录购买明细
         Date nowTime = new Date();
-
+        // 【优化】将记录购买行为放在减库存之前,可以减少行级锁的持有时间.
         try {
-            // 减库存
-            int updateCount = seckillDao.reduceNumber(seckillId, nowTime);
-            if (updateCount <= 0) {
-                // 没有更新到记录,意味着秒杀技术
-                throw new SeckillCloseException("seckill is closed");
+            // 记录购买行为
+            int insertCount = successKilledDao.insertSuccessKilled(seckillId, userPhone);
+            if (insertCount <= 0) {
+                // 重复秒杀
+                throw new RepeatKillException("seckill repeated");
             } else {
-                // 记录购买行为
-                int insertCount = successKilledDao.insertSuccessKilled(seckillId, userPhone);
-                if (insertCount <= 0) {
-                    // 重复秒杀
-                    throw new RepeatKillException("seckill repeated");
+                // 减库存, 热点商品竞争
+                int updateCount = seckillDao.reduceNumber(seckillId, nowTime);
+                if (updateCount <= 0) {
+                    // 没有更新到记录,意味着秒杀结束,rollback
+                    throw new SeckillCloseException("seckill is closed");
                 } else {
-                    // 秒杀成功
+                    // 秒杀成功,commit
                     SuccessKilled successKilled = successKilledDao.queryByIdWithSeckill(seckillId, userPhone);
                     return new SeckillExecution(seckillId,SeckillStateEnum.SUCCESS, successKilled);
                 }
@@ -142,6 +153,42 @@ public class SeckillServiceImpl implements SeckillService{
             // 所有编译期异常转化为运行期异常
             // 这样的话,当 Spring 调用这个方法时它能感受到所有的异常都归为了 SeckillException 这个异常.这时 Spring 的声明式事务会帮助我们做事务会滚.
             throw new SeckillException("seckill inner error" + e.getMessage());
+        }
+    }
+
+    /**
+     * 使用存储过程执行秒杀操作逻辑
+     * @param seckillId
+     * @param userPhone
+     * @param md5
+     * @return
+     */
+    public SeckillExecution executeSeckillProcedure(long seckillId, long userPhone, String md5) {
+        if (md5 == null || !md5.equals(getMD5(seckillId))) {
+            return new SeckillExecution(seckillId, SeckillStateEnum.DATA_REWRITE);
+        }
+        Date killTime = new Date();
+        // 下面是 SeckillDao 调用存储过程的逻辑
+        Map<String, Object> map = new HashMap<String, Object>();
+        map.put("seckillId", seckillId);
+        map.put("phone", userPhone);
+        map.put("killTime", killTime);
+        map.put("result", null);
+        // 执行存储过程,result被赋值
+        try {
+            seckillDao.killByProcedure(map);
+            // 获取 result
+            int result = MapUtils.getInteger(map, "result", -2);
+            // 秒杀成功与失败
+            if (result == 1) {
+                SuccessKilled sk = successKilledDao.queryByIdWithSeckill(seckillId, userPhone);
+                return new SeckillExecution(seckillId, SeckillStateEnum.SUCCESS, sk);
+            } else {
+                return new SeckillExecution(seckillId, SeckillStateEnum.stateOf(result));
+            }
+        } catch (Exception e) {
+            logger.error(e.getMessage(), e);
+            return new SeckillExecution(seckillId, SeckillStateEnum.INNER_ERROR);
         }
     }
 
