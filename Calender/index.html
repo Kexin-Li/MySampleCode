@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<title>Calendar</title>
+<style type="text/css">
+body{
+	background:#f2f2f2;
+	margin:40px;
+}
+*{
+	margin:0;
+	padding:0;
+}
+.calendar{
+	width:450px;
+	height:350px;
+	background:#fff;
+	box-shadow:0px 1px 1px rgba(0,0,0,0.1);
+}
+.title{
+	height:70px;
+	border-bottom:1px solid rgba(0,0,0,0.1);
+	text-align:center;
+	position:relative;
+}
+.body{
+	padding:10px 20px;
+}
+.body-list ul{
+	width:100%;
+	font-family:arial;
+	font-weight:bold;
+	font-size:14px;
+}
+.body-list ul li{
+	width:14.28%;
+	height:36px;
+	line-height:36px;
+	list-style-type:none;
+	display:block;
+	box-sizing:border-box;
+	float:left;
+	text-align:center;
+}
+.lightgrey{
+	color:#a8a8a8;
+}
+.darkgrey{
+	color:#565656;
+}
+.green{
+	color:#6ac13c;
+}
+.greenbox{
+	border:1px solid #6ac13c;
+	background:#e9f8df;
+}
+#calendar-title{
+	font-size:25px;
+	font-family:arial;
+	font-weight:bold;
+	text-transform:uppercase;
+	padding:14px 0 0 0;
+}
+#calendar-year{
+	font-size:15px;
+	font-family:arial;
+	font-weight:normal;
+}
+#prev{
+	text-indent:-9999px;
+	position:absolute;
+	left:0;
+	top:0;
+	width:60px;
+	height:70px;
+	background:url(prev.png) no-repeat 50% 50%;
+}
+#next{
+	text-indent:-9999px;
+	position:absolute;
+	right:0;
+	top:0;
+	width:60px;
+	height:70px;
+	background:url(next.png) no-repeat 50% 50%;
+}
+</style>
+<script type="text/javascript" src="index.js"></script>
+</head>
+
+<body>
+<div class="calender">
+  <div class="title">
+    <h1 class="green" id="calender-title">Month</h1>
+    <h2 class="green small" id="calender-year">Year</h2>
+    <a href="" id="prev" onclick="prev();">Prev Month</a>
+    <a href="" id="next" onclick="next();">Next Month</a>
+  </div>
+  <div class="body">
+    <div class="lightgrey body-list">
+      <ul>
+        <li>MON</li>
+        <li>TUE</li>
+        <li>WED</li>
+        <li>THU</li>
+        <li>FRI</li>
+        <li>SAT</li>
+        <li>SUN</li>
+      </ul>
+    </div>
+    <div class="darkgrey body-list">
+      <ul id="days">
+      </ul>
+    </div>
+  </div>
+</div>
+</body>
+</html>
