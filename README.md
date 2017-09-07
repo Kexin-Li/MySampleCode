@@ -11,3 +11,4 @@
 - 基于 SSM 的 BBS（BBS）
 - Maven 使用不成熟指南（maven）
 - 将 war 包自动化部署到 tomcat，界面由 JFace 开发（SWTProject）
+- 练习的算法（Algorithm）
