@@ -3,3 +3,4 @@
 
 ## Index
 - [StrStr](http://www.lintcode.com/zh-cn/problem/strstr/)
+- [Subsets](http://www.lintcode.com/zh-cn/problem/subsets/)
