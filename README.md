@@ -13,3 +13,4 @@
 - 将 war 包自动化部署到 tomcat，界面由 JFace 开发（SWTProject）
 - 练习的算法（Algorithm）
 - 基于 Spring Boot 的小小管理系统，前后端分离（web-application）
+- PowerMock 学习记录（PowerMockMock）
