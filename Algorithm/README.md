@@ -5,3 +5,4 @@
 - [StrStr](http://www.lintcode.com/zh-cn/problem/strstr/)
 - [Subsets](http://www.lintcode.com/zh-cn/problem/subsets/)
 - [SubsetsWithDup](http://www.lintcode.com/zh-cn/problem/subsets-ii/)
+- [CloestNumber](http://www.lintcode.com/en/problem/closest-number-in-sorted-array/)
