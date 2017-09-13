@@ -8,3 +8,7 @@
 - [CloestNumber](http://www.lintcode.com/en/problem/closest-number-in-sorted-array/)
 - [First Position of Target](http://www.lintcode.com/en/problem/first-position-of-target/)
 - [Last Position of Target](http://www.lintcode.com/en/problem/last-position-of-target/)
+- [Find Peak Element](http://www.lintcode.com/problem/find-peak-element)
+- [Search a 2D Matrix](http://www.lintcode.com/problem/search-a-2d-matrix)
+- [Search In Rotated Sorted Array](http://www.lintcode.com/problem/search-in-rotated-sorted-array)
+- [Search In a Big Sorted Array](http://www.lintcode.com/problem/search-in-a-big-sorted-array)
